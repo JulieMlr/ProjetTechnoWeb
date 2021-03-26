@@ -1,0 +1,33 @@
+<form action="/utilisateur/inscription" method="post">
+    <div>
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="user_name">
+    </div>
+    <div>
+        <label for="name">Prénom :</label>
+        <input type="text" id="surname" name="user_surname">
+    </div>
+    <div>
+        <label for="mail">E-mail :</label>
+        <input type="email" id="mail" name="user_mail">
+    </div>
+    <div>
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="user_password" minlength="8"></input>
+    </div>
+    <div>
+        <label for="dateDeNaissance">Date de naissance:</label>
+        <input type="date" id="start" name="user_date" value="2000-01-01" min="1960-01-01" max="2035-12-31">
+    </div>
+    <div>
+        <input type="checkbox" id="admin" name="admin" checked>
+        <label for="scales">Admin</label>
+    </div>
+    <div class="button">
+        <button type="submit">S'inscrire</button>
+    </div>
+
+   
+</form>
+<p> Si vous êtes déjà inscrit, connectez vous ! </p>
+<button><a href="/utilisateur/connexion">Connexion</a></button>
