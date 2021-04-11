@@ -29,3 +29,12 @@
 - NoSQL / MongoDB
 - NodeJS
 - Google Firebase
+
+## Lancement du projet
+### Web
+- cd Web
+- npm run dev
+
+## Mobile
+- cd Running
+- expo start

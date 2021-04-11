@@ -18,6 +18,7 @@ connectDB()
 //routes
 app.use("/course",require('./routes/course'))
 app.use("/utilisateur",require('./routes/utilisateur'))
+app.use("/administrateur",require('./routes/administrateur'))
 
 //run server
 const port=process.env.PORT||5000

@@ -19,10 +19,23 @@ router.get("/connexion", (req, res) => {
   res.sendFile(path.resolve("connexion.html"));
 });
 
-router.post("/inscriptionMobile", (req, res) => {
-  const nom = req.query.nom;
-  console.log(nom)
-  res.send(nom)
+router.post("/inscriptionMobile/:nom/:prenom/:email/:dateDeNaissance/:motDePasse", (req, res) => {
+  const nom = req.params.nom;
+  const prenom = req.params.prenom;
+  const motDePasse = req.params.motDePasse;
+  const email = req.params.email;
+  const dateDeNaissance = req.params.dateDeNaissance;
+  const newUtilisateur = new Utilisateur({
+    nom,
+    prenom,
+    motDePasse,
+    email,
+    dateDeNaissance
+  });
+  newUtilisateur
+    .save()
+    .then((utilisateurs) => res.send("Utilisateur a bien été crée"))
+    .catch((err) => console.log(err));
 })
 
 router.post("/information", async (req, res) => {
@@ -57,7 +70,6 @@ router.post("/inscription", async (req, res) => {
   const prenom = req.body.user_surname;
   const motDePasse = hash;
   const email = req.body.user_mail;
-  const admin = req.body.admin;
   const dateDeNaissance = req.body.user_date;
   const taille = req.body.taille;
   const poids = req.body.poids;
@@ -65,11 +77,7 @@ router.post("/inscription", async (req, res) => {
   const photo = req.body.photo;
   const tableauCourse = req.body.tableauCourse;
 
-  if (admin == "on") {
-    var droit = 1;
-  } else {
-    var droit = 0;
-  }
+
 
   const newUtilisateur = new Utilisateur({
     nom,
