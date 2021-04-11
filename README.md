@@ -36,5 +36,5 @@
 - npm run dev
 
 ## Mobile
-- cd Running
+- cd Mobile
 - expo start
