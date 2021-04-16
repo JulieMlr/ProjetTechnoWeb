@@ -1,0 +1,214 @@
+<style>
+    * {
+        margin: 0;
+        font-family: Verdana;
+    }
+
+    .hello {
+        background-color: #1abc9c;
+        width: 100%;
+        height: auto;
+        position: relative;
+        text-align: center;
+    }
+
+    p {
+        font-size: xx-large;
+        padding: 10px 0;
+        text-transform: capitalize;
+        color: white;
+    }
+
+    .nom {
+        text-transform: uppercase;
+    }
+
+    .table-wrapper {
+        margin: 10px 70px 70px;
+        box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .fl-table {
+        margin-top: 20px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: normal;
+        border: none;
+        border-collapse: collapse;
+        width: 100%;
+        white-space: nowrap;
+        background-color: white;
+    }
+
+    .fl-table td,
+    .fl-table th {
+        text-align: center;
+        width: 25%;
+        padding: 8px;
+    }
+
+    .fl-table td {
+        border-right: 1px solid #f8f8f8;
+        font-size: 12px;
+    }
+
+    .fl-table thead th {
+        color: #ffffff;
+        background-color: #1abc9c;
+    }
+
+
+    .fl-table thead th:nth-child(odd) {
+        color: #ffffff;
+        background: #e00974;
+    }
+
+    .fl-table tr:nth-child(even) {
+        background: #F8F8F8;
+    }
+
+    .column {
+        text-transform: capitalize;
+    }
+
+    .liste {
+        text-align: center;
+        margin-top: 20px;
+        font-size: large;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    img {
+        width: 10%;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 767px) {
+        .fl-table {
+            display: block;
+            width: 100%;
+        }
+
+        .table-wrapper:before {
+            content: "Scroll horizontally >";
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            color: white;
+            padding: 0 0 10px;
+        }
+
+        .fl-table thead,
+        .fl-table tbody,
+        .fl-table thead th {
+            display: block;
+        }
+
+        .fl-table thead th:last-child {
+            border-bottom: none;
+        }
+
+        .fl-table thead {
+            float: left;
+        }
+
+        .fl-table tbody {
+            width: auto;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .fl-table td,
+        .fl-table th {
+            padding: 20px .625em .625em .625em;
+            height: 60px;
+            vertical-align: middle;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 120px;
+            font-size: 13px;
+            text-overflow: ellipsis;
+        }
+
+        .fl-table thead th {
+            text-align: left;
+            border-bottom: 1px solid #f7f7f9;
+        }
+
+        .fl-table tbody tr {
+            display: table-cell;
+        }
+
+        .fl-table tbody tr:nth-child(odd) {
+            background: none;
+        }
+
+        .fl-table tr:nth-child(even) {
+            background: transparent;
+        }
+
+        .fl-table tr td:nth-child(odd) {
+            background: #F8F8F8;
+            border-right: 1px solid #E6E4E4;
+        }
+
+        .fl-table tr td:nth-child(even) {
+            border-right: 1px solid #E6E4E4;
+        }
+
+        .fl-table tbody td {
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+
+<div>
+    <div class="hello">
+        <p>
+            <span class="nom">
+                <%= nom %>
+            </span>
+            <%= prenom %>
+        </p>
+    </div>
+    <div class="liste"> Liste des utilisateurs </div>
+
+    <div class="table-wrapper">
+        <table class="fl-table">
+
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <script>
+                    var nom = `<%= nomUser%>`.replaceAll("},{", '}|{')
+                    nom = nom.replaceAll(';, ', '; ')
+                    var tab = nom.split('|');
+                    var tab_bis = []
+                    for (var i = 0; i < tab.length; i++) {
+                        tab_bis = tab[i].split(",")
+                        console.log(tab_bis)
+                        document.write(" <tr><td class=\"column\">" + tab_bis[2].substring(13, tab_bis[2].length - 5) + "</td> <td class=\"column\">" + tab_bis[3].substring(16, tab_bis[3].length - 5) + "</td><td>" + tab_bis[5].substring(15, tab_bis[5].length - 5) + "</td><td><a href=\"/administrateur/modifier/" + tab_bis[1].substring(8, tab_bis[1].length) + " \"> <img src=\"https://cdn.discordapp.com/attachments/771665604977491978/832628015279243274/settings.png\" </a></td></tr>")
+                    }
+                    console.log(tab_bis[1].substring(8, tab_bis[1].length))
+                </script>
+
+            </tbody>
+        </table>
+
+
+    </div>

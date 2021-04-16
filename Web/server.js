@@ -3,6 +3,10 @@ const cors=require('cors')
 const app=express()
 const bodyParser = require("body-parser");
 
+app.use(express.static(__dirname + '/'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname);
 
 const connectDB=require('./config/connectDB')
 
@@ -10,6 +14,10 @@ const connectDB=require('./config/connectDB')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cors())
+app.use(express.static(__dirname + '/'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname);
 
 //connectDB (config)
 connectDB()

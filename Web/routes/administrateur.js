@@ -1,25 +1,41 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const path = require("path");
-const bcrypt = require("bcrypt");
+const path = require('path');
+const bcrypt = require('bcrypt');
 
-const Administrateur = require("../models/Administrateurs");
+const Administrateur = require('../models/Administrateurs');
+const Utilisateur = require('../models/Utilisateurs');
 
-router.get("/", (req, res) => {
-  Administrateur.find()
+router.get('/', (req, res) => {
+  /*Administrateur.find()
     .then((administrateurs) => res.send(administrateurs))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err));*/
+  res.sendFile(path.resolve('accueil.html'));
 });
 
-router.get("/inscriptionAdmin", (req, res) => {
-  res.sendFile(path.resolve("inscription.html"));
+router.get('/modifier/:_id', (req, res) => {
+  const { _id } = req.params;
+  Utilisateur.findOne({_id : _id}).then((utilisateurs) => {
+    res.render('modifierUser.html', {
+      nom: utilisateurs.nom,
+      prenom: utilisateurs.prenom,
+      email: utilisateurs.email,
+      dateDeNaissance: utilisateurs.dateDeNaissance,
+      tableauCourse: utilisateurs.tableauCourse,
+      motDePasse: utilisateurs.motDePasse
+    })
+  })
+})
+
+router.get('/inscriptionAdmin', (req, res) => {
+  res.sendFile(path.resolve('inscription.html'));
 });
 
-router.get("/connexionAdmin", (req, res) => {
-  res.sendFile(path.resolve("connexion.html"));
+router.get('/connexionAdmin', (req, res) => {
+  res.sendFile(path.resolve('connexion.html'));
 });
 
-router.post("/inscriptionAdmin", async (req, res) => {
+router.post('/inscriptionAdmin', async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(req.body.user_password, salt);
   const nom = req.body.user_name;
@@ -35,49 +51,62 @@ router.post("/inscriptionAdmin", async (req, res) => {
   });
   newAdministrateur
     .save()
-    .then((administrateur) => res.send("Administrateur a bien été crée"))
+    .then((administrateur) =>
+      res.redirect('/administrateur/' + administrateur._id)
+    )
     .catch((err) => console.log(err));
 });
 
-router.get("/:_id", (req, res) => {
+router.get('/:_id', (req, res) => {
   const { _id } = req.params;
-  Administrateur.findOne({ _id })
-    .then((administrateurs) => res.send(administrateurs))
+  Utilisateur.find()
+    .then((utilisateurs) => {
+      console.log(utilisateurs);
+      Administrateur.findOne({ _id })
+        .then((administrateurs) =>
+          res.render('accueilConnect.html', {
+            nom: administrateurs.nom,
+            prenom: administrateurs.prenom,
+            nomUser: [] = utilisateurs
+          })
+        )
+        .catch((err) => console.log(err));
+    })
     .catch((err) => console.log(err));
 });
 
-router.put("/:_id", (req, res) => {
+router.put('/:_id', (req, res) => {
   const { _id } = req.params;
   const modifyUser = req.body;
   Administrateur.findOneAndUpdate({ _id }, { $set: modifyUser })
-    .then((administrateurs) => res.send("Admin Updated"))
+    .then((administrateurs) => res.send('Admin Updated'))
     .catch((err) => console.log(err));
 });
 
-router.delete("/:_id", (req, res) => {
+router.delete('/:_id', (req, res) => {
   const { _id } = req.params;
   Administrateur.findOneAndDelete({ _id: _id })
-    .then((administrateurs) => res.send("success"))
+    .then((administrateurs) => res.send('success'))
     .catch((err) => console.log(err));
 });
 
-router.post("/detail", async (req, res) => {
+router.post('/detail', async (req, res) => {
   const email = req.body.user_mail;
   const motDePasse = req.body.user_password;
   console.log(motDePasse);
   Administrateur.findOne({ email: email })
     .then((administrateurs) => {
       if (administrateurs == null) {
-        res.sendFile(path.resolve("connexion.html"));
+        res.sendFile(path.resolve('connexion.html'));
       } else {
         bcrypt.compare(
           motDePasse,
           administrateurs.motDePasse,
           function (err, response) {
             if (response == true) {
-              res.send("Hello");
+              res.send('Hello');
             } else {
-              res.sendFile(path.resolve("connexion.html"));
+              res.sendFile(path.resolve('connexion.html'));
             }
           }
         );
