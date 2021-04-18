@@ -167,6 +167,7 @@
         }
     }
 </style>
+
 <div class="hello">
     <p> Modification de l'utilisateur</p>
 </div>
@@ -182,46 +183,44 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <input type="text" value=<%=nom %> />
-                </td>
-                <td>
-                    <input type="text" value=<%=prenom %> />
-                </td>
-                <td>
-                    <input type="text" value=<%=email %> />
-                </td>
-                <td>
-                    <input type="date" value=date_bis/>
-                </td>
-                <script>
-                    var date = `<%= dateDeNaissance %>`
-                    console.log(date)
-                    var date_bis =date.substring(4, date.length-52)
-                    date_bis = date_bis.replaceAll(" ", "-")
-                    if(date_bis.includes("Jan")) {
-                        date_bis = date_bis.replace("Jan", "01")
-                    }
-                    console.log(date_bis)
-                    var nom = `<%= tableauCourse%>`
-                    var tab = nom.split(',');
-                    var tab_bis = []
-                    for (var i = 0; i < tab.length; i++) {
-                        tab_bis = tab[i]
-                        if (i == 0) {
-                            document.write("<td>" + tab_bis + "</td>")
-                        }
-                        else {
-                            document.write("<tr><td></td><td></td><td></td><td></td><td>" + tab_bis + "</td></tr>")
+            <form action="/administrateur/put" method="post">
+                <input type="text" name="admin_id" value=<%=idAdmin%> style="display: none;"/>
+                <input type="text" name="user_id" value=<%=id%> style="display: none;"/>
+                <tr>
+                    <td>
+                        <input type="text" name="user_nom" value=<%=nom%> />
+                    </td>
+                    <td>
+                        <input type="text" name="user_prenom" value=<%=prenom %> />
+                    </td>
+                    <td>
+                        <input type="text" name="user_email" value=<%=email %> />
+                    </td>
 
-                        }
-                    }
-                </script>
+                    <script>
+                        var date = new Date(`<%= dateDeNaissance %>`)
+                        var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+                            .toISOString()
+                            .split("T")[0];
+                        document.write("<td><input type=\"date\" name=\"user_date\" value=" + dateString + "></td>")
+                        var tabCourse = `<%= tableauCourse%>`
+                        var tab = tabCourse.split(',');
+                        var tab_bis = []
+                        for (var i = 0; i < tab.length; i++) {
+                            tab_bis = tab[i]
+                            if (i == 0) {
+                                document.write("<td>" + tab_bis + "</td>")
+                            }
+                            else {
+                                document.write("<tr><td></td><td></td><td></td><td></td><td>" + tab_bis + "</td></tr>")
 
-            </tr>
+                            }
+                        }
+                    </script>
+                </tr>
+                <input type="submit" value="Modifier" />
+            </form>
         </tbody>
-
 
 
 

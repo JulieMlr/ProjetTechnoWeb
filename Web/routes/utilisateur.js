@@ -41,7 +41,6 @@ router.post("/inscriptionMobile/:nom/:prenom/:email/:dateDeNaissance/:motDePasse
 router.post("/information", async (req, res) => {
   const email = req.body.user_mail;
   const motDePasse = req.body.user_password;
-  console.log(motDePasse);
   Utilisateur.findOne({ email: email })
     .then((utilisateurs) => {
       if (utilisateurs == null) {

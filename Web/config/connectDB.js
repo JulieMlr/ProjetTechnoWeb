@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const config   = require("config");
+mongoose.set('useFindAndModify', false);
+
 
 const connectDB = () => {
   mongoose
