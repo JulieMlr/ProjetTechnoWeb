@@ -4,7 +4,21 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { API_ROOT_URL } from "../config";
 
-const bcrypt = require("bcryptjs");
+const Verif = async (email, motDePasse, navigation) => {
+//try {
+  console.log('on est dedans')
+        const res = axios.get(`${API_ROOT_URL}/utilisateur/connexionMobile?email=${email}&motDePasse=${motDePasse}`)
+          .then((response) => {
+            console.log('data : '+JSON.stringify(response.data))
+            navigation.navigate('Accueil')
+          })
+        //console.log(res)
+        //return (await res.catch()).data;
+    //} catch (err) {
+        //console.log(err);
+        //throw err;
+    //}
+}
 
 const Connexion = (props) => {
   const [motDePasse, setMotDePasse] = useState("");
@@ -39,7 +53,9 @@ const Connexion = (props) => {
         </View>
         <TouchableOpacity
           style={styles.loginBtn}
-          //onPress={() => Ajout(prenom, nom, email, dateDeNaissance, motDePasse)}
+          onPress={() => {
+            Verif(email, motDePasse, navigation)
+          }}
         >
           <Text style={styles.loginText}>Connexion</Text>
         </TouchableOpacity>

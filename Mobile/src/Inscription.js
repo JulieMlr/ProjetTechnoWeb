@@ -1,19 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, {  useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import DatePicker from "react-native-datepicker";
 import { API_ROOT_URL } from "../config";
 
-const bcrypt = require("bcryptjs");
-
-
 const Ajout = async (prenom, nom, email, dateDeNaissance, motDePasse) => {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(motDePasse, salt);
   try {
-    const res = axios.post(API_ROOT_URL + `/utilisateur/inscriptionMobile/` + nom + `/` + prenom + `/` + email + `/` + dateDeNaissance + `/` + hash)
-    //console.log((await res.catch()).data)
+    const res = axios.post(`${API_ROOT_URL}/utilisateur/inscriptionMobile?nom=${nom}&prenom=${prenom}&email=${email}&dateDeNaissance=${dateDeNaissance}&motDePasse=${motDePasse}`)
+    //console.log('data : '+res.data)
     return (await res.catch()).data;
   } catch (err) {
     console.log(err);
@@ -28,8 +22,12 @@ const Inscription = (props) => {
   const [motDePasse, setMotDePasse] = useState("");
   const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
-  const [dateDeNaissance, setDate] = useState("01-01-2000");
+  const [dateDeNaissance, setDate] = useState(new Date("2000-01-01"));
+  const [jourNaissance, setJourN] = useState("01");
+  const [moisNaissance, setMoisN] = useState("01");
+  const [anneeNaissance, setAnneeN] = useState("2000");
 
+  const { navigation } = props;
 
   return (
     <View style={styles.container}>
@@ -55,29 +53,34 @@ const Inscription = (props) => {
             onChangeText={(prenom) => setPrenom(prenom)}
           />
         </View>
-        <DatePicker
-          style={{ width: 200, marginBottom: 20 }}
-          date={dateDeNaissance}
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          minDate="01-01-1960"
-          maxDate="31-12-3035"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={(dateDeNaissance) => setDate(dateDeNaissance)}
-        />
+        <View style={styles.inputView2}>
+          <View style={styles.inputViewJM}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Jour"
+              placeholderTextColor="gray"
+              onChangeText={(jourNaissance) => setJourN(jourNaissance)}
+            />
+          </View>
+
+          <View style={styles.inputViewJM}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Mois"
+              placeholderTextColor="gray"
+              onChangeText={(moisNaissance) => setMoisN(moisNaissance)}
+            />
+          </View>
+
+          <View style={styles.inputViewAnnee}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Annee"
+              placeholderTextColor="gray"
+              onChangeText={(anneeNaissance) => setAnneeN(anneeNaissance)}
+            />
+          </View>
+        </View>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -98,12 +101,16 @@ const Inscription = (props) => {
 
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => Ajout(prenom, nom, email, dateDeNaissance, motDePasse)}
+          onPress={() => {
+            setDate(new Date(anneeNaissance + '-' + moisNaissance + '-' + jourNaissance))
+            Ajout(prenom, nom, email, dateDeNaissance, motDePasse)
+            navigation.navigate('Connexion')
+          }}
         >
           <Text style={styles.loginText}>Inscription</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View >
   );
 };
 const styles = StyleSheet.create({
@@ -135,6 +142,30 @@ const styles = StyleSheet.create({
     height: 45,
     marginBottom: 20,
     justifyContent: "center",
+  },
+
+  inputView2: {
+    borderRadius: 10,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+    flexDirection: 'row'
+  },
+
+  inputViewJM: {
+    backgroundColor: "#e0e0e0",
+    borderRadius: 10,
+    width: "20%",
+    height: 45,
+    marginRight: 20
+  },
+
+  inputViewAnnee: {
+    backgroundColor: "#e0e0e0",
+    borderRadius: 10,
+    width: "40%",
+    height: 45,
+    marginLeft: 5,
   },
 
   TextInput: {

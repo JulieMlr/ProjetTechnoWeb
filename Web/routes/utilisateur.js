@@ -19,12 +19,19 @@ router.get("/connexion", (req, res) => {
   res.sendFile(path.resolve("connexion.html"));
 });
 
-router.post("/inscriptionMobile/:nom/:prenom/:email/:dateDeNaissance/:motDePasse", (req, res) => {
-  const nom = req.params.nom;
-  const prenom = req.params.prenom;
-  const motDePasse = req.params.motDePasse;
-  const email = req.params.email;
-  const dateDeNaissance = req.params.dateDeNaissance;
+router.post("/inscriptionMobile", async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.query.motDePasse, salt);
+  const nom = req.query.nom;
+  const prenom = req.query.prenom;
+  const motDePasse = hash;
+  const email = req.query.email;
+  const dateDeNaissance = req.query.dateDeNaissance;
+  const taille = '';
+  const poids = '';
+  const sexe = '';
+  const photo = '';
+  const tableauCourse = '';
   const newUtilisateur = new Utilisateur({
     nom,
     prenom,
@@ -37,6 +44,33 @@ router.post("/inscriptionMobile/:nom/:prenom/:email/:dateDeNaissance/:motDePasse
     .then((utilisateurs) => res.send("Utilisateur a bien été crée"))
     .catch((err) => console.log(err));
 })
+
+router.get("/connexionMobile", async (req, res) => {
+  const email = req.query.email;
+  const motDePasse = req.query.motDePasse;
+  console.log(email+' '+motDePasse)
+  Utilisateur.findOne({ email: email })
+    .then((utilisateurs) => {
+      console.log(utilisateurs)
+      if (utilisateurs == null) {
+        res.status(500).send('Something broke!')
+      } else {
+        bcrypt.compare(
+          motDePasse,
+          utilisateurs.motDePasse,
+          function (err, response) {
+            console.log(utilisateurs)
+            if (response == true) {
+              res.send(utilisateurs);
+            } else {
+              res.status(500).send('Something broke!')
+            }
+          }
+        );
+      }
+    })
+    .catch((err) => res.send(err));
+});
 
 router.post("/information", async (req, res) => {
   const email = req.body.user_mail;
