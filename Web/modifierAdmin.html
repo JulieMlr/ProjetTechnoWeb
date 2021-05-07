@@ -4,7 +4,7 @@
         font-family: Verdana;
     }
 
-    .hello {
+    .header {
         background-color: #1abc9c;
         width: 100%;
         height: auto;
@@ -16,10 +16,6 @@
         font-size: xx-large;
         padding: 10px 0;
         color: white;
-    }
-
-    .nom {
-        text-transform: uppercase;
     }
 
     .form-style-5 {
@@ -110,23 +106,10 @@
     .form-style-5 input[type="button"]:hover {
         background: #109177;
     }
-    .column {
-        text-transform: capitalize;
-    }
-
-    .liste {
-        text-align: center;
-        margin-top: 20px;
-        font-size: large;
-    }
 
     a {
         text-decoration: none;
         color: black;
-    }
-
-    img {
-        width: 10%;
     }
 
     .custom-btn {
@@ -137,7 +120,8 @@
         color: black;
     }
 
-    .custom-btn, .custom-btn-bis {
+    .custom-btn,
+    .custom-btn-bis {
         width: 130px;
         height: 40px;
         border-radius: 5px;
@@ -155,7 +139,8 @@
         outline: none;
     }
 
-    .btn-3, .btn-3-bis {
+    .btn-3,
+    .btn-3-bis {
         background: none;
         width: 130px;
         height: 40px;
@@ -185,7 +170,7 @@
     }
 
     .btn-3-bis:before,
-    .btn-3-bis:after  {
+    .btn-3-bis:after {
         background: black;
     }
 
@@ -239,7 +224,7 @@
     .btn-3 span:before,
     .btn-3 span:after,
     .btn-3-bis span:before,
-    .btn-3-bis span:after{
+    .btn-3-bis span:after {
         position: absolute;
         content: "";
         left: 0;
@@ -253,7 +238,7 @@
     }
 
     .btn-3-bis span:before,
-    .btn-3-bis span:after{
+    .btn-3-bis span:after {
         background: black;
     }
 
@@ -282,11 +267,9 @@
     input {
         width: 80%;
     }
-
-
 </style>
 
-<div class="hello">
+<div class="header">
     <a href="/administrateur/<%=idAdmin%>"><button class="custom-btn btn-3"><span>Retour</span></button></a>
     <p> Modification du profil</p>
 </div>
@@ -295,15 +278,12 @@
         <fieldset>
             <legend><span class="number">1</span> Information </legend>
             <input type="text" name="admin_id" value=<%=idAdmin%> style="display: none;"/>
-
             <input type="text" name="user_nom" value=<%=nom%> />
-
             <input type="text" name="user_prenom" value=<%=prenom %> />
-
             <input type="email" name="user_email" value=<%=email %> />
-
             <input type="password" name="user_password" placeholder="Nouveau mot de passe" />
         </fieldset>
+        
         <div class="button">
             <button class="custom-btn-bis btn-3-bis"><span>Modifier</span></button>
         </div>

@@ -4,7 +4,7 @@
         font-family: Verdana;
     }
 
-    .hello {
+    .header {
         background-color: #1abc9c;
         width: 100%;
         height: auto;
@@ -16,10 +16,6 @@
         font-size: xx-large;
         padding: 10px 0;
         color: white;
-    }
-
-    .nom {
-        text-transform: uppercase;
     }
 
     .table-wrapper {
@@ -66,23 +62,9 @@
         background: #F8F8F8;
     }
 
-    .column {
-        text-transform: capitalize;
-    }
-
-    .liste {
-        text-align: center;
-        margin-top: 20px;
-        font-size: large;
-    }
-
     a {
         text-decoration: none;
         color: black;
-    }
-
-    img {
-        width: 10%;
     }
 
     input {
@@ -97,7 +79,8 @@
         text-align: center;
     }
 
-    .custom-btn, .custom-btn-bis {
+    .custom-btn,
+    .custom-btn-bis {
         width: 130px;
         height: 40px;
         border-radius: 5px;
@@ -115,7 +98,8 @@
         outline: none;
     }
 
-    .btn-3, .btn-3-bis {
+    .btn-3,
+    .btn-3-bis {
         background: none;
         width: 130px;
         height: 40px;
@@ -145,7 +129,7 @@
     }
 
     .btn-3-bis:before,
-    .btn-3-bis:after  {
+    .btn-3-bis:after {
         background: black;
     }
 
@@ -199,7 +183,7 @@
     .btn-3 span:before,
     .btn-3 span:after,
     .btn-3-bis span:before,
-    .btn-3-bis span:after{
+    .btn-3-bis span:after {
         position: absolute;
         content: "";
         left: 0;
@@ -213,7 +197,7 @@
     }
 
     .btn-3-bis span:before,
-    .btn-3-bis span:after{
+    .btn-3-bis span:after {
         background: black;
     }
 
@@ -238,6 +222,7 @@
     .btn-3-bis span:hover:after {
         width: 100%;
     }
+
     /* Responsive */
 
     @media (max-width: 767px) {
@@ -321,7 +306,7 @@
     }
 </style>
 
-<div class="hello">
+<div class="header">
     <a href="/administrateur/<%=idAdmin%>"><button class="custom-btn btn-3"><span>Retour</span></button></a>
     <p> Modification de l'utilisateur</p>
 </div>
