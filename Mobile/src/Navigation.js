@@ -5,14 +5,14 @@ import Accueil from './Accueil'
 import { StyleSheet } from 'react-native'
 import HeaderButton from './HeaderButton'
 import Connexion from './Connexion'
+import TabNavigation from './TabNavigation'
 
 const Stack = createStackNavigator()
 
 const Navigation = () => {
     return (
-        <Stack.Navigator
-            intialRouteName="Accueil"
-        >
+        <Stack.Navigator intialRouteName="Accueil" >
+
             <Stack.Screen
                 name="Accueil"
                 component={Accueil}
@@ -22,6 +22,7 @@ const Navigation = () => {
                     },
                     headerStyle: { height: 0 }
                 }} />
+
             <Stack.Screen name="Inscription" component={Inscription} options={({ navigation }) => ({
                 headerStyle: {
                     backgroundColor: '#1abc9c'
@@ -31,6 +32,7 @@ const Navigation = () => {
                 },
                 headerLeft: () => HeaderButton(navigation)
             })} />
+
             <Stack.Screen name="Connexion" component={Connexion} options={({ navigation }) => ({
                 headerStyle: {
                     backgroundColor: '#1abc9c'
@@ -40,6 +42,13 @@ const Navigation = () => {
                 },
                 headerLeft: () => HeaderButton(navigation)
             })} />
+
+            <Stack.Screen name="Application" component={TabNavigation} options={({ navigation }) => ({
+                headerStyle: { height: 0 },
+                headerTitle: null,
+                headerLeft: null
+            })} />
+
         </Stack.Navigator>
     )
 }
