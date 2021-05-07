@@ -79,7 +79,7 @@ router.post('/modifierAdmin', async (req, res) => {
         }
       )
         .then((administrateur) =>
-          res.redirect('/administrateur/modifierAdmin/' + idAdmin)
+          res.redirect('/administrateur/' + idAdmin)
         )
         .catch((err) => console.log(err));
     });
@@ -99,7 +99,7 @@ router.post('/modifierAdmin', async (req, res) => {
       }
     )
       .then((administrateur) =>
-        res.redirect('/administrateur/modifierAdmin/' + idAdmin)
+        res.redirect('/administrateur/' + idAdmin)
       )
       .catch((err) => console.log(err));
   }
