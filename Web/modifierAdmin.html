@@ -90,10 +90,6 @@
         width: 10%;
     }
 
-    input {
-        width: 80%;
-    }
-
     .custom-btn {
         width: 130px;
         height: 40px;
@@ -195,6 +191,10 @@
         width: 100%;
     }
 
+    input {
+        width: 80%;
+    }
+
     /* Responsive */
 
     @media (max-width: 767px) {
@@ -279,7 +279,7 @@
 </style>
 
 <div class="hello">
-    <p> Modification de l'utilisateur</p>
+    <p> Modification du profil</p>
 </div>
 <div class="table-wrapper">
     <table class="fl-table">
@@ -288,14 +288,12 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
-                <th>Date de naissance</th>
-                <th>Courses</th>
+                <th>Mot de passe</th>
             </tr>
         </thead>
         <tbody>
-            <form action="/administrateur/put" method="post">
+            <form action="/administrateur/modifierAdmin" method="post">
                 <input type="text" name="admin_id" value=<%=idAdmin%> style="display: none;"/>
-                <input type="text" name="user_id" value=<%=id%> style="display: none;"/>
                 <tr>
                     <td>
                         <input type="text" name="user_nom" value=<%=nom%> />
@@ -307,26 +305,9 @@
                         <input type="email" name="user_email" value=<%=email %> />
                     </td>
 
-                    <script>
-                        var date = new Date(`<%= dateDeNaissance %>`)
-                        var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
-                            .toISOString()
-                            .split("T")[0];
-                        document.write("<td><input type=\"date\" name=\"user_date\" value=" + dateString + "></td>")
-                        var tabCourse = `<%= tableauCourse%>`
-                        var tab = tabCourse.split(',');
-                        var tab_bis = []
-                        for (var i = 0; i < tab.length; i++) {
-                            tab_bis = tab[i]
-                            if (i == 0) {
-                                document.write("<td>" + tab_bis + "</td>")
-                            }
-                            else {
-                                document.write("<tr><td></td><td></td><td></td><td></td><td>" + tab_bis + "</td></tr>")
-
-                            }
-                        }
-                    </script>
+                    <td>
+                        <input type="password" name="user_password" placeholder="Nouveau mot de passe" />
+                    </td>
                 </tr>
                 <div class="button">
                     <button class="custom-btn btn-3"><span>Modifier</span></button>

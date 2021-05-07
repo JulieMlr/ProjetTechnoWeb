@@ -46,6 +46,65 @@ router.get('/connexionAdmin', (req, res) => {
   res.sendFile(path.resolve('connexion.html'));
 });
 
+router.get('/modifierAdmin/:_id', (req, res) => {
+  const { _id } = req.params;
+  Administrateur.findOne({ _id: _id }).then((administrateur) => {
+    res.render('modifierAdmin.html', {
+      idAdmin: _id,
+      nom: administrateur.nom,
+      prenom: administrateur.prenom,
+      email: administrateur.email,
+      motDePasse: administrateur.motDePasse,
+    });
+  });
+});
+router.post('/modifierAdmin', async (req, res) => {
+  const idAdmin = req.body.admin_id;
+  const nom = req.body.user_nom;
+  const prenom = req.body.user_prenom;
+  const email = req.body.user_email;
+  console.log(req.body.user_password)
+  if (req.body.user_password == "") {
+    Administrateur.findOne({ _id: idAdmin }).then((administrateurAvant) => {
+      const motDePasse = administrateurAvant.motDePasse;
+      Administrateur.findOneAndUpdate(
+        { _id: idAdmin },
+        {
+          $set: {
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            motDePasse: motDePasse,
+          },
+        }
+      )
+        .then((administrateur) =>
+          res.redirect('/administrateur/modifierAdmin/' + idAdmin)
+        )
+        .catch((err) => console.log(err));
+    });
+  } else {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.user_password, salt);
+    const motDePasse = hash;
+    Administrateur.findOneAndUpdate(
+      { _id: idAdmin },
+      {
+        $set: {
+          nom: nom,
+          prenom: prenom,
+          email: email,
+          motDePasse: motDePasse,
+        },
+      }
+    )
+      .then((administrateur) =>
+        res.redirect('/administrateur/modifierAdmin/' + idAdmin)
+      )
+      .catch((err) => console.log(err));
+  }
+});
+
 router.post('/inscriptionAdmin', async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(req.body.user_password, salt);
@@ -54,18 +113,26 @@ router.post('/inscriptionAdmin', async (req, res) => {
   const motDePasse = hash;
   const email = req.body.user_mail;
 
-  const newAdministrateur = new Administrateur({
-    nom,
-    prenom,
-    email,
-    motDePasse,
-  });
-  newAdministrateur
-    .save()
-    .then((administrateur) =>
-      res.redirect('/administrateur/' + administrateur._id)
+  Utilisateur.findOne({ email: email })
+    .then((utilisateurs) =>
+      res.render('inscription.html', {
+        erreur: 'Email deja utilisé',
+      })
     )
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const newAdministrateur = new Administrateur({
+        nom,
+        prenom,
+        email,
+        motDePasse,
+      });
+      newAdministrateur
+        .save()
+        .then((administrateur) =>
+          res.redirect('/administrateur/' + administrateur._id)
+        )
+        .catch((err) => console.log(err));
+    });
 });
 
 router.post('/put', (req, res) => {
@@ -107,23 +174,27 @@ router.post('/connexion', (req, res) => {
   Administrateur.findOne({ email: email })
     .then((administrateurs) => {
       if (administrateurs == null) {
-        res.sendFile(path.resolve('connexion.html'));
+        res.render('connexion.html', {
+          erreur: 'Email incorrect',
+        });
       } else {
         bcrypt.compare(
           motDePasse,
           administrateurs.motDePasse,
           function (err, response) {
             if (response == true) {
-              res.redirect('/administrateur/' + administrateurs._id)
+              res.redirect('/administrateur/' + administrateurs._id);
             } else {
-              res.sendFile(path.resolve('connexion.html'));
+              res.render('connexion.html', {
+                erreur: 'Mot de passe incorrect',
+              });
             }
           }
         );
       }
     })
     .catch((err) => res.send(err));
-})
+});
 router.put('/:_id', (req, res) => {
   const { _id } = req.params;
   const modifyUser = req.body;
@@ -152,7 +223,7 @@ router.post('/detail', async (req, res) => {
           administrateurs.motDePasse,
           function (err, response) {
             if (response == true) {
-              res.send("Hello")
+              res.send('Hello');
             } else {
               res.sendFile(path.resolve('connexion.html'));
             }

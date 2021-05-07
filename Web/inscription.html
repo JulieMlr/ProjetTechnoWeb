@@ -13,7 +13,7 @@
         padding: 20px;
         background: #f4f7f8;
         border-radius: 8px;
-        font-family: Georgia, "Times New Roman", Times, serif;
+        font-family: Verdana;
     }
 
     .form-style-5 fieldset {
@@ -33,7 +33,7 @@
     .form-style-5 input[type="text"],
     .form-style-5 input[type="email"],
     .form-style-5 input[type="password"] {
-        font-family: Georgia, "Times New Roman", Times, serif;
+        font-family: Verdana;
         background: rgba(255, 255, 255, .1);
         border: none;
         border-radius: 4px;
@@ -94,10 +94,19 @@
         background: #109177;
     }
 
+    .erreur {
+        margin-bottom: 10px;
+        font-family: Verdana;
+        color: red;
+        font-size: 13px;
+    }
 </style>
 
-<a href="/administrateur"><img class="logo" src="https://cdn.discordapp.com/attachments/771665604977491978/832557884197044244/logo_large.png"
-    alt="logo" /></a>
+<a href="/administrateur"><img class="logo"
+        src="https://cdn.discordapp.com/attachments/771665604977491978/832557884197044244/logo_large.png"
+        alt="logo" /></a>
+
+
 
 <div class="form-style-5">
     <form action="/administrateur/inscriptionAdmin" method="post">
@@ -105,8 +114,16 @@
             <legend><span class="number">1</span> Information </legend>
             <input type="text" id="name" name="user_name" placeholder="Votre nom *" required>
             <input type="text" name="user_surname" id="surname" placeholder="Votre prénom *" required>
+            <script>
+                var erreur = `<%= erreur%>`
+                console.log(erreur)
+                if (erreur === 'Email deja utilisé')
+                    document.write("<div class='erreur'>" + erreur + "</div>")
+            
+            </script>
             <input type="email" name="user_mail" id="mail" placeholder="Votre email *" required>
-            <input type="password" name="user_password" id="password" minlength="8" placeholder="Votre mot de passe *" required>
+            <input type="password" name="user_password" id="password" minlength="8" placeholder="Votre mot de passe *"
+                required>
             <!--<input type="password" name="user_password_bis" id="confirm_password" minlength="8"
                 placeholder="Confirmer votre mot de passe *" required >-->
         </fieldset>

@@ -89,10 +89,10 @@
 
     .button {
         position: absolute;
-        right:0;
+        right: 0;
         background-color: none;
     }
-    
+
     .custom-btn {
         width: 130px;
         height: 40px;
@@ -277,16 +277,16 @@
     }
 </style>
 
+
 <div>
     <div class="hello">
-        <a href="/administrateur/connexionAdmin"><button class="custom-btn btn-3" ><span>Deconnexion</span></button></a>
-        <p>
-            <span class="nom">
-                <%= nom %>
-            </span>
-            <%= prenom %>
-        </p>
+        <a href="/administrateur/connexionAdmin"><button class="custom-btn btn-3"><span>Deconnexion</span></button></a>
+        <script> 
+            var idAdmin = `<%= id%>`
+            console.log(idAdmin)
         
+        document.write("<a href=\"/administrateur/modifierAdmin/" + idAdmin + "\"><p><span class='nom'><%= nom %></span> <%= prenom %></p></a>");
+    </script>
     </div>
     <div class="liste"> Liste des utilisateurs </div>
 

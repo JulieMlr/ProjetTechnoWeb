@@ -96,6 +96,13 @@
     a {
         text-decoration: none;
     }
+
+    .erreur {
+        margin-bottom: 10px;
+        font-family: Verdana;
+        color: red;
+        font-size: 13px;
+    }
 </style>
 
 
@@ -106,7 +113,21 @@
     <form action="/administrateur/connexion" method="post">
         <fieldset>
             <legend><span class="number">1</span> Information </legend>
+            <script>
+                var erreur = `<%= erreur%>`
+                console.log(erreur)
+                if (erreur === 'Email incorrect')
+                    document.write("<div class='erreur'>" + erreur + "</div>")
+            
+            </script>
             <input type="email" id="mail" name="user_mail" placeholder="Votre email">
+            <script>
+                var erreur = `<%= erreur%>`
+                console.log(erreur)
+                if (erreur === 'Mot de passe incorrect')
+                    document.write("<div class='erreur'>" + erreur + "</div>")
+            
+            </script>
             <input type="password" id="password" name="user_password" placeholder="Votre mot de passe"></input>
             <input type="submit" value="Connexion"></input>
             <a href="/administrateur/inscriptionAdmin"><input type="button" value="Inscription"></input></a>
