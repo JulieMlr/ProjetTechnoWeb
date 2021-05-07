@@ -93,11 +93,14 @@
     .form-style-5 input[type="button"]:hover {
         background: #109177;
     }
+    a {
+        text-decoration: none;
+    }
 </style>
 
 
-<img class="logo" src="https://cdn.discordapp.com/attachments/771665604977491978/832557884197044244/logo_large.png"
-    alt="logo" />
+<a href="/administrateur"><img class="logo" src="https://cdn.discordapp.com/attachments/771665604977491978/832557884197044244/logo_large.png"
+    alt="logo" /></a>
 
 <div class="form-style-5">
     <form action="/administrateur/connexion" method="post">
@@ -106,5 +109,7 @@
             <input type="email" id="mail" name="user_mail" placeholder="Votre email">
             <input type="password" id="password" name="user_password" placeholder="Votre mot de passe"></input>
             <input type="submit" value="Connexion"></input>
+            <a href="/administrateur/inscriptionAdmin"><input type="button" value="Inscription"></input></a>
+        </fieldset>
     </form>
 </div>
