@@ -1,83 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import DatePicker from "react-native-datepicker";
 import { API_ROOT_URL } from "../config";
 
 const bcrypt = require("bcryptjs");
 
-
-const Ajout = async (prenom, nom, email, dateDeNaissance, motDePasse) => {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(motDePasse, salt);
-  try {
-    const res = axios.post(API_ROOT_URL + `/utilisateur/inscriptionMobile/` + nom + `/` + prenom + `/` + email + `/` + dateDeNaissance + `/` + hash)
-    //console.log((await res.catch()).data)
-    return (await res.catch()).data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-
-
-const Inscription = (props) => {
-  const [prenom, setPrenom] = useState("");
+const Connexion = (props) => {
   const [motDePasse, setMotDePasse] = useState("");
-  const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
-  const [dateDeNaissance, setDate] = useState("01-01-2000");
 
+  const {navigation} = props
 
   return (
     <View style={styles.container}>
       <Image
-        style={{ height: 150, width: '100%', marginTop: '-25%' }}
+        style={{ height: 150, width: '100%', marginTop: '-25%', marginBottom: '10%' }}
         source={{
           uri: 'https://cdn.discordapp.com/attachments/771665604977491978/840167041507655680/logo_small_mobile.png'
         }} />
       <View style={styles.form}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Nom"
-            placeholderTextColor="gray"
-            onChangeText={(nom) => setNom(nom)}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Prenom"
-            placeholderTextColor="gray"
-            onChangeText={(prenom) => setPrenom(prenom)}
-          />
-        </View>
-        <DatePicker
-          style={{ width: 200, marginBottom: 20 }}
-          date={dateDeNaissance}
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          minDate="01-01-1960"
-          maxDate="31-12-3035"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={(dateDeNaissance) => setDate(dateDeNaissance)}
-        />
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -95,17 +37,23 @@ const Inscription = (props) => {
             onChangeText={(motDePasse) => setMotDePasse(motDePasse)}
           />
         </View>
-
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => Ajout(prenom, nom, email, dateDeNaissance, motDePasse)}
+          //onPress={() => Ajout(prenom, nom, email, dateDeNaissance, motDePasse)}
+        >
+          <Text style={styles.loginText}>Connexion</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => navigation.navigate('Inscription')}
         >
           <Text style={styles.loginText}>Inscription</Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -147,7 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 20,
     backgroundColor: "#1abc9c",
     paddingHorizontal: "10%",
   },
@@ -155,6 +103,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-});
+})
 
-export default Inscription;
+export default Connexion;
