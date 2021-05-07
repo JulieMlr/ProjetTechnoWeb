@@ -34,6 +34,7 @@
 ### Web
 - cd Web
 - npm run dev
+- localhost:5000/administrateur
 
 ## Mobile
 - cd Mobile

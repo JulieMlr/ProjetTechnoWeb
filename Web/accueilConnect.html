@@ -4,15 +4,16 @@
         font-family: Verdana;
     }
 
-    .hello {
+    .header {
         background-color: #1abc9c;
         width: 100%;
         height: auto;
         position: relative;
-        text-align: center;
+        /*text-align: center;*/
     }
 
     p {
+        text-align: center;
         font-size: xx-large;
         padding: 10px 0;
         text-transform: capitalize;
@@ -84,6 +85,107 @@
 
     img {
         width: 10%;
+    }
+
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+    }
+
+    .btn-3 {
+        background: none;
+        width: 130px;
+        height: 40px;
+        line-height: 42px;
+        padding: 0;
+        border: white;
+
+    }
+
+    .btn-3 span {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn-3:before,
+    .btn-3:after {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 0;
+        background: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-3:before {
+        height: 0%;
+        width: 2px;
+    }
+
+    .btn-3:after {
+        width: 0%;
+        height: 2px;
+    }
+
+    .btn-3:hover {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .btn-3:hover:before {
+        height: 100%;
+    }
+
+    .btn-3:hover:after {
+        width: 100%;
+    }
+
+    .btn-3 span:hover {
+        color: white;
+    }
+
+    .btn-3 span:before,
+    .btn-3 span:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        background: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-3 span:before {
+        width: 2px;
+        height: 0%;
+    }
+
+    .btn-3 span:after {
+        width: 0%;
+        height: 2px;
+    }
+
+    .btn-3 span:hover:before {
+        height: 100%;
+    }
+
+    .btn-3 span:hover:after {
+        width: 100%;
     }
 
     /* Responsive */
@@ -169,20 +271,20 @@
     }
 </style>
 
-<div>
-    <div class="hello">
-        <p>
-            <span class="nom">
-                <%= nom %>
-            </span>
-            <%= prenom %>
-        </p>
-    </div>
-    <div class="liste"> Liste des utilisateurs </div>
 
+<div>
+    <div class="header">
+        <a href="/administrateur/connexionAdmin"><button class="custom-btn btn-3"><span>Deconnexion</span></button></a>
+        <script>
+            var idAdmin = `<%= id%>`
+            console.log(idAdmin)
+            document.write("<a href=\"/administrateur/modifierAdmin/" + idAdmin + "\"><p><span class='nom'><%= nom %></span> <%= prenom %></p></a>");
+        </script>
+    </div>
+
+    <div class="liste"> Liste des utilisateurs </div>
     <div class="table-wrapper">
         <table class="fl-table">
-
             <thead>
                 <tr>
                     <th>Nom</th>
@@ -193,8 +295,6 @@
                 </tr>
             </thead>
             <tbody>
-
-
                 <script>
                     var id = `<%= id%>`
                     var nom = `<%= nomUser%>`.replaceAll("},{", '}|{')
@@ -203,12 +303,10 @@
                     var tab_bis = []
                     for (var i = 0; i < tab.length; i++) {
                         tab_bis = tab[i].split(",")
-                        document.write(" <tr><td class=\"column\">" + tab_bis[2].substring(13, tab_bis[2].length - 5) + "</td> <td class=\"column\">" + tab_bis[3].substring(16, tab_bis[3].length - 5) + "</td><td>" + tab_bis[5].substring(15, tab_bis[5].length - 5) + "</td><td><a href=\"/administrateur/modifier/" + id + "/" + tab_bis[1].substring(8, tab_bis[1].length) + " \"> <img src=\"https://cdn.discordapp.com/attachments/771665604977491978/832628015279243274/settings.png\" </a></td><td><a href=\"/administrateur/delete/" + id + "/" + tab_bis[1].substring(8, tab_bis[1].length) + " \"> <img src=\"https://cdn.discordapp.com/attachments/771665604977491978/832628015279243274/settings.png\" </a></td></tr>")
+                        document.write(" <tr><td class=\"column\">" + tab_bis[2].substring(13, tab_bis[2].length - 5) + "</td> <td class=\"column\">" + tab_bis[3].substring(16, tab_bis[3].length - 5) + "</td><td>" + tab_bis[5].substring(15, tab_bis[5].length - 5) + "</td><td><a href=\"/administrateur/modifier/" + id + "/" + tab_bis[1].substring(8, tab_bis[1].length) + " \"> <img src=\"https://cdn.discordapp.com/attachments/771665604977491978/832628015279243274/settings.png\" </a></td><td><a href=\"/administrateur/delete/" + id + "/" + tab_bis[1].substring(8, tab_bis[1].length) + " \"> <img src=\"https://cdn.discordapp.com/attachments/771665604977491978/840125893733253180/delete.png\" </a></td></tr>")
                     }
                 </script>
-
             </tbody>
         </table>
-
-
     </div>
+</div>

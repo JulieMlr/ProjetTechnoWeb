@@ -4,22 +4,18 @@
         font-family: Verdana;
     }
 
-    .hello {
+    .header {
         background-color: #1abc9c;
         width: 100%;
         height: auto;
         position: relative;
-        text-align: center;
     }
 
     p {
+        text-align: center;
         font-size: xx-large;
         padding: 10px 0;
         color: white;
-    }
-
-    .nom {
-        text-transform: uppercase;
     }
 
     .table-wrapper {
@@ -66,23 +62,165 @@
         background: #F8F8F8;
     }
 
-    .column {
-        text-transform: capitalize;
-    }
-
-    .liste {
-        text-align: center;
-        margin-top: 20px;
-        font-size: large;
-    }
-
     a {
         text-decoration: none;
         color: black;
     }
 
-    img {
-        width: 10%;
+    input {
+        width: 80%;
+    }
+
+    .custom-btn {
+        color: white;
+    }
+
+    .button {
+        text-align: center;
+    }
+
+    .custom-btn,
+    .custom-btn-bis {
+        width: 130px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+    }
+
+    .btn-3,
+    .btn-3-bis {
+        background: none;
+        width: 130px;
+        height: 40px;
+        line-height: 42px;
+        padding: 0;
+    }
+
+    .btn-3 {
+        border: white;
+    }
+
+    .btn-3-bis {
+        border: black;
+    }
+
+    .btn-3 span,
+    .btn-3-bis span {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn-3:before,
+    .btn-3:after {
+        background: white;
+    }
+
+    .btn-3-bis:before,
+    .btn-3-bis:after {
+        background: black;
+    }
+
+    .btn-3:before,
+    .btn-3:after,
+    .btn-3-bis:before,
+    .btn-3-bis:after {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 0;
+        transition: all 0.3s ease;
+    }
+
+    .btn-3:before,
+    .btn-3-bis:before {
+        height: 0%;
+        width: 2px;
+    }
+
+    .btn-3:after,
+    .btn-3-bis:after {
+        width: 0%;
+        height: 2px;
+    }
+
+    .btn-3:hover,
+    .btn-3-bis:hover {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .btn-3:hover:before,
+    .btn-3-bis:hover:before {
+        height: 100%;
+    }
+
+    .btn-3:hover:after,
+    .btn-3-bis:hover:after {
+        width: 100%;
+    }
+
+    .btn-3 span:hover {
+        color: white;
+    }
+
+    .btn-bis span:hover {
+        color: black;
+    }
+
+    .btn-3 span:before,
+    .btn-3 span:after,
+    .btn-3-bis span:before,
+    .btn-3-bis span:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        transition: all 0.3s ease;
+    }
+
+    .btn-3 span:before,
+    .btn-3 span:after {
+        background: white;
+    }
+
+    .btn-3-bis span:before,
+    .btn-3-bis span:after {
+        background: black;
+    }
+
+    .btn-3 span:before,
+    .btn-3-bis span:before {
+        width: 2px;
+        height: 0%;
+    }
+
+    .btn-3 span:after,
+    .btn-3-bis span:after {
+        width: 0%;
+        height: 2px;
+    }
+
+    .btn-3 span:hover:before,
+    .btn-3-bis span:hover:before {
+        height: 100%;
+    }
+
+    .btn-3 span:hover:after,
+    .btn-3-bis span:hover:after {
+        width: 100%;
     }
 
     /* Responsive */
@@ -168,7 +306,8 @@
     }
 </style>
 
-<div class="hello">
+<div class="header">
+    <a href="/administrateur/<%=idAdmin%>"><button class="custom-btn btn-3"><span>Retour</span></button></a>
     <p> Modification de l'utilisateur</p>
 </div>
 <div class="table-wrapper">
@@ -194,7 +333,7 @@
                         <input type="text" name="user_prenom" value=<%=prenom %> />
                     </td>
                     <td>
-                        <input type="text" name="user_email" value=<%=email %> />
+                        <input type="email" name="user_email" value=<%=email %> />
                     </td>
 
                     <script>
@@ -218,13 +357,10 @@
                         }
                     </script>
                 </tr>
-                <input type="submit" value="Modifier" />
+                <div class="button">
+                    <button class="custom-btn-bis btn-3-bis"><span>Modifier</span></button>
+                </div>
             </form>
         </tbody>
-
-
-
-
-
     </table>
 </div>
