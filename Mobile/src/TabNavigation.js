@@ -7,7 +7,9 @@ import { Ionicons } from '@expo/vector-icons'
 
 const Tabs = createBottomTabNavigator()
 
-const TabNavigation = () => {
+const TabNavigation = (props) => {
+    const {route, navigation} = props
+
     return (
         <Tabs.Navigator
             tabBarOptions={{
@@ -20,17 +22,18 @@ const TabNavigation = () => {
                     color: 'white'
                 }
             }}
+            initialRouteName = "Running"
         >
 
             <Tabs.Screen name="Running" component={Running} options={{
                 tabBarIcon: () => <Ionicons name="timer-outline" size={25} color='white' />,
             }} />
 
-            <Tabs.Screen name="Historique" component={RunningHistory} options={{
+            <Tabs.Screen name="Historique" component={RunningHistory} initialParams={{ email: route.params.email }} options={{
                 tabBarIcon: () => <Ionicons name="file-tray-full-outline" size={25} color='white' />,
             }} />
 
-            <Tabs.Screen name="Mon Compte" component={MyAccount} options={{
+            <Tabs.Screen name="Mon Compte" component={MyAccount} initialParams={{ email: route.params.email }} options={{
                 tabBarIcon: () => <Ionicons name="person-outline" size={25} color='white' />,
             }} />
 

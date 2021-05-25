@@ -9,7 +9,7 @@ const UtilisateurSchema = new schema({
     dateDeNaissance: { type : Date},
     taille: { type: Number},
     poids: { type: Number},
-    sexe: { type: Boolean},
+    sexe: { type: String},
     photo : { type: String},
     tableauCourse : [String],
 })

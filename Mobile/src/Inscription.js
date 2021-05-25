@@ -60,6 +60,7 @@ const Inscription = (props) => {
               placeholder="Jour"
               placeholderTextColor="gray"
               onChangeText={(jourNaissance) => setJourN(jourNaissance)}
+              keyboardType='numeric'
             />
           </View>
 
@@ -69,6 +70,7 @@ const Inscription = (props) => {
               placeholder="Mois"
               placeholderTextColor="gray"
               onChangeText={(moisNaissance) => setMoisN(moisNaissance)}
+              keyboardType='numeric'
             />
           </View>
 
@@ -78,6 +80,7 @@ const Inscription = (props) => {
               placeholder="Annee"
               placeholderTextColor="gray"
               onChangeText={(anneeNaissance) => setAnneeN(anneeNaissance)}
+              keyboardType='numeric'
             />
           </View>
         </View>

@@ -27,8 +27,8 @@ router.post("/inscriptionMobile", async (req, res) => {
   const motDePasse = hash;
   const email = req.query.email;
   const dateDeNaissance = req.query.dateDeNaissance;
-  const taille = '';
-  const poids = '';
+  const taille = 0;
+  const poids = 0;
   const sexe = '';
   const photo = '';
   const tableauCourse = '';
@@ -37,7 +37,12 @@ router.post("/inscriptionMobile", async (req, res) => {
     prenom,
     motDePasse,
     email,
-    dateDeNaissance
+    dateDeNaissance,
+    taille,
+    poids,
+    sexe,
+    photo,
+    tableauCourse
   });
   newUtilisateur
     .save()
@@ -139,16 +144,27 @@ router.post("/:_id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/:_id", (req, res) => {
+/*router.get("/:_id", (req, res) => {
   const { _id } = req.params;
   Utilisateur.findOne({ _id })
+    .then((utilisateurs) => res.send(utilisateurs))
+    .catch((err) => console.log(err));
+});*/
+
+router.get("/:email", (req, res) => {
+  const { email } = req.params;
+  Utilisateur.findOne({ email })
     .then((utilisateurs) => res.send(utilisateurs))
     .catch((err) => console.log(err));
 });
 
 router.put("/:_id", (req, res) => {
   const { _id } = req.params;
-  const modifyUser = req.body;
+  const modifyUser = {
+    "taille": req.query.taille,
+    "poids": req.query.poids,
+    "sexe": req.query.sexe
+  }
   Utilisateur.findOneAndUpdate({ _id }, { $set: modifyUser })
     .then((utilisateurs) => res.send("utilisateur Updated"))
     .catch((err) => console.log(err));

@@ -6,11 +6,11 @@ import { API_ROOT_URL } from "../config";
 
 const Verif = async (email, motDePasse, navigation) => {
 //try {
-  console.log('on est dedans')
+  //console.log('on est dedans')
         const res = axios.get(`${API_ROOT_URL}/utilisateur/connexionMobile?email=${email}&motDePasse=${motDePasse}`)
           .then((response) => {
-            console.log('data : '+JSON.stringify(response.data))
-            navigation.navigate('Application')
+            //console.log('data : '+JSON.stringify(response.data))
+            navigation.navigate('Application', {email})
           })
         //console.log(res)
         //return (await res.catch()).data;
