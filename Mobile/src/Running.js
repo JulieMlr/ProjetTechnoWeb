@@ -7,7 +7,6 @@ import * as Location from 'expo-location'
 
 const Running = (props) => {
     const [locationServiceEnabled, setLocationServiceEnabled] = useState(false)
-
     const [timerOn, setTimerOn] = useState(false)
     const [restart, setRestart] = useState(false)
     const [counter, setCounter] = useState(0)
@@ -22,6 +21,12 @@ const Running = (props) => {
         latitudeDelta: 0.009,
         longitudeDelta: 0.009
     });
+
+    const LOCATION_SETTINGS = {
+        accuracy: Location.Accuracy.Balanced,
+        timeInterval: 200,
+        distanceInterval: 0
+    }
 
     const start = () => {
         if (timerOn == false) {
@@ -54,6 +59,8 @@ const Running = (props) => {
     useEffect(() => {
         CheckIfLocationEnabled()
         GetCurrentLocation()
+        GetEvolutiveLocation()
+
     }, [])
 
     const CheckIfLocationEnabled = async () => {
@@ -85,13 +92,17 @@ const Running = (props) => {
             const { latitude, longitude } = coords
             const latitudeDelta = 0.009
             const longitudeDelta = 0.009
-            console.log('coords : ' + JSON.stringify(coords))
+            //console.log('coords : ' + JSON.stringify(coords))
             setRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
         }
     }
 
+    const GetEvolutiveLocation = async () => {
+        const { evoLoc } = await Location.watchPositionAsync(LOCATION_SETTINGS, (loc) => { console.log('location : '+JSON.stringify(loc)) })
+    }
+
     return (
-        <View style={ styles.container }>
+        <View style={styles.container}>
             <Image
                 style={{ height: 150, width: '100%', top: 5 }}
                 source={{
