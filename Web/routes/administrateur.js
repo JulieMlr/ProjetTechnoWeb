@@ -122,6 +122,7 @@ router.post('/inscriptionAdmin', async (req, res) => {
 
   Administrateur.findOne({ email: email })
     .then((administrateur) => {
+      console.log(administrateur.email)
       res.render('inscription.html', {
         erreur: 'Email deja utilisé',
       })
