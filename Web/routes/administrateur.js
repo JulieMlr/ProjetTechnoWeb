@@ -120,12 +120,12 @@ router.post('/inscriptionAdmin', async (req, res) => {
   const motDePasse = hash;
   const email = req.body.user_mail;
 
-  Utilisateur.findOne({ email: email })
-    .then((utilisateurs) =>
+  Administrateur.findOne({ email: email })
+    .then((administrateur) => {
       res.render('inscription.html', {
         erreur: 'Email deja utilisé',
       })
-    )
+    })
     .catch((err) => {
       const newAdministrateur = new Administrateur({
         nom,
