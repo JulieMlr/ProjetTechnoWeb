@@ -14,7 +14,7 @@ const Running = (props) => {
     const latitudeDelta = 0.009
     const longitudeDelta = 0.009
     const day = new Date().getDate();
-    const month = new Date().getMonth();
+    const month = new Date().getMonth()+1;
     const year = new Date().getFullYear();
     const [distanceCourse, setDistCourse] = useState(0)
 
@@ -253,34 +253,38 @@ const styles = StyleSheet.create({
     infoRun: {
         flex: 1,
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: '5%'
     },
     playBtn: {
         width: '15%',
-        height: '65%',
+        height: '50%',
         backgroundColor: '#1abc9c',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        marginHorizontal: '2.5%'
+        marginHorizontal: '2.5%',
+        marginTop: '10%'
     },
     pauseBtn: {
         width: '15%',
-        height: '65%',
+        height: '50%',
         backgroundColor: 'orange',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        marginHorizontal: '2.5%'
+        marginHorizontal: '2.5%',
+        marginTop: '10%'
     },
     stopBtn: {
         width: '15%',
-        height: '65%',
+        height: '50%',
         backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        marginHorizontal: '2.5%'
+        marginHorizontal: '2.5%',
+        marginTop: '10%'
     },
     time: {
         fontSize: 25,

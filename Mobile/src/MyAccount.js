@@ -76,33 +76,33 @@ const MyAccount = (props) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: '#1abc9c',
+        backgroundColor: 'white',
         height: '100%'
     },
     title: {
         marginTop: '20%',
-        color: 'white',
+        color: '#1abc9c',
         fontSize: 40,
         textAlign: 'center'
     },
     container: {
         alignItems: 'center',
         marginVertical: '15%',
-        backgroundColor: 'white',
+        backgroundColor: '#1abc9c',
         marginHorizontal: '5%',
         borderRadius: 10
     },
     text: {
         marginVertical: '2.5%',
-        fontSize: 15,
-        color: 'black'
+        fontSize: 20,
+        color: 'white'
     },
     textInput: {
-        fontSize: 15,
-        color: 'black',
+        fontSize: 20,
+        color: 'white',
         textAlign: 'center',
-        borderWidth: 1,
-        borderRadius: 5
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     },
     block: {
         flexDirection: 'row'
@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
         height: 50,
         alignSelf: "center",
         justifyContent: "center",
-        backgroundColor: "white",
+        backgroundColor: "#1abc9c",
         paddingHorizontal: "10%",
     },
     loginText: {
         fontWeight: "bold",
-        color: 'black',
+        color: 'white',
         textAlign: 'center',
         fontSize: 20
     },
