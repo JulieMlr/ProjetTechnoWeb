@@ -11,20 +11,30 @@ const Running = (props) => {
     const [restart, setRestart] = useState(false)
     const [counter, setCounter] = useState(0)
     const [timer, setTimer] = useState()
+    const latitudeDelta = 0.009
+    const longitudeDelta = 0.009
     const day = new Date().getDate();
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
+    const [distanceCourse, setDistCourse] = useState(0)
 
     const [region, setRegion] = useState({
-        latitude: 51.5078788,
-        longitude: -0.0877321,
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.009,
+        longitudeDelta: 0.009
+    });
+
+    const [newRegion, setNewRegion] = useState({
+        latitude: null,
+        longitude: null,
         latitudeDelta: 0.009,
         longitudeDelta: 0.009
     });
 
     const LOCATION_SETTINGS = {
-        accuracy: Location.Accuracy.Balanced,
-        timeInterval: 200,
+        accuracy: Location.Accuracy.Highest,
+        timeInterval: 1000,
         distanceInterval: 0
     }
 
@@ -32,12 +42,14 @@ const Running = (props) => {
         if (timerOn == false) {
             if (restart == true) {
                 setCounter(0)
+                setDistCourse(0)
                 setRestart(false)
             }
             setTimerOn(true)
             setTimer(setInterval(() => {
                 setCounter(counter => counter + 1)
             }, 1000))
+            GetEvolutiveLocation()
         }
     }
 
@@ -59,9 +71,12 @@ const Running = (props) => {
     useEffect(() => {
         CheckIfLocationEnabled()
         GetCurrentLocation()
-        GetEvolutiveLocation()
-
     }, [])
+
+    useEffect(() => {
+        //console.log('region : ' + JSON.stringify(region)+'\n\n')
+        CalcKm()
+    }, [newRegion])
 
     const CheckIfLocationEnabled = async () => {
         let enabled = await Location.hasServicesEnabledAsync()
@@ -90,15 +105,55 @@ const Running = (props) => {
         const { coords } = await Location.getCurrentPositionAsync()
         if (coords) {
             const { latitude, longitude } = coords
-            const latitudeDelta = 0.009
-            const longitudeDelta = 0.009
             //console.log('coords : ' + JSON.stringify(coords))
             setRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
+            setNewRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
         }
     }
 
     const GetEvolutiveLocation = async () => {
-        const { evoLoc } = await Location.watchPositionAsync(LOCATION_SETTINGS, (loc) => { console.log('location : '+JSON.stringify(loc)) })
+        await Location.watchPositionAsync(LOCATION_SETTINGS, (loc) => GetNewLocation(loc))
+    }
+
+    const degreesToRadians = (degrees) => {
+        const pi = Math.PI
+        return degrees * (pi / 180)
+    }
+
+    const calcDist2Points = (lat1, long1, lat2, long2) => {
+        return Math.acos(
+            Math.sin(degreesToRadians(lat1))
+            *
+            Math.sin(degreesToRadians(lat2))
+            +
+            Math.cos(degreesToRadians(lat1))
+            *
+            Math.cos(degreesToRadians(lat2))
+            *
+            Math.cos(degreesToRadians(long1 - long2))
+        ) * 637100
+    }
+
+    const GetNewLocation = (geolocation) => {
+        const { latitude, longitude } = geolocation.coords
+
+        const tmpRegion = {
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: latitudeDelta,
+            longitudeDelta: longitudeDelta
+        }
+        setNewRegion(tmpRegion)
+    }
+
+    const CalcKm = () => {
+        const distance = calcDist2Points(region.latitude, region.longitude, newRegion.latitude, newRegion.longitude)
+        //console.log('region.latitude : '+region.latitude+' region.longitude : '+region.longitude+' newregion.latitude : '+newRegion.latitude+' newRegion.longitude : '+newRegion.longitude)
+        if (!Number.isNaN(distance) && timerOn == true) {
+            console.log('distance : ' + parseInt(distance))
+            setDistCourse(parseInt(distanceCourse) + parseInt(distance))
+            setRegion(newRegion)
+        }
     }
 
     return (
@@ -109,15 +164,15 @@ const Running = (props) => {
                     uri: 'https://cdn.discordapp.com/attachments/771665604977491978/840167041507655680/logo_small_mobile.png'
                 }} />
             <Text style={{ fontSize: 25, color: '#e00974', marginTop: '-5%', marginBottom: '2.5%' }}>{day} / {month} / {year}</Text>
-            <MapView
+            {region.latitude != null && <MapView
                 style={{ height: '55%', width: '90%' }}
                 region={region}
                 onRegionChangeComplete={region => setRegion(region)}
             >
                 <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
-            </MapView>
+            </MapView>}
             <View style={styles.infoRun}>
-                <Text style={styles.time}>km</Text>
+                <Text style={styles.time}>{distanceCourse} m</Text>
                 <Text style={styles.time}>{counter} s</Text>
                 <View style={styles.block}>
                     <TouchableOpacity
