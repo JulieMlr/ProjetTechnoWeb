@@ -258,33 +258,33 @@ const styles = StyleSheet.create({
     },
     playBtn: {
         width: '15%',
-        height: '50%',
+        height: '55%',
         backgroundColor: '#1abc9c',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
         marginHorizontal: '2.5%',
-        marginTop: '10%'
+        marginTop: '5%'
     },
     pauseBtn: {
         width: '15%',
-        height: '50%',
+        height: '55%',
         backgroundColor: 'orange',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
         marginHorizontal: '2.5%',
-        marginTop: '10%'
+        marginTop: '5%'
     },
     stopBtn: {
         width: '15%',
-        height: '50%',
+        height: '55%',
         backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
         marginHorizontal: '2.5%',
-        marginTop: '10%'
+        marginTop: '5%'
     },
     time: {
         fontSize: 25,
