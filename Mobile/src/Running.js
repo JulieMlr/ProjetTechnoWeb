@@ -18,6 +18,41 @@ const Running = (props) => {
     const year = new Date().getFullYear();
     const [distanceCourse, setDistCourse] = useState(0)
 
+    const tabVilles = [
+        {
+            latitude: 47.3215806,
+            longitude: 5.0414701
+        },
+        {
+            latitude: 45.3869468,
+            longitude: 4.2858545
+        },
+        {
+            latitude: 45.4401467,
+            longitude: 4.3873058
+        },
+        {
+            latitude: 43.6044622,
+            longitude: 1.4442469
+        },
+        {
+            latitude: 44.841225,
+            longitude: -0.5800364
+        },
+        {
+            latitude: 48.3905283,
+            longitude: -4.4860088
+        },
+        {
+            latitude: 50.6365654,
+            longitude: 3.0635282
+        },
+        {
+            latitude: 48.584614,
+            longitude: 7.7507127
+        }
+    ]
+
     const [region, setRegion] = useState({
         latitude: null,
         longitude: null,
@@ -33,8 +68,8 @@ const Running = (props) => {
     });
 
     const LOCATION_SETTINGS = {
-        accuracy: Location.Accuracy.Highest,
-        timeInterval: 1000,
+        accuracy: Location.Accuracy.High,
+        timeInterval: 3000,
         distanceInterval: 0
     }
 
@@ -136,6 +171,10 @@ const Running = (props) => {
 
     const GetNewLocation = (geolocation) => {
         const { latitude, longitude } = geolocation.coords
+        /*let indice = Math.floor(Math.random() * 8)
+        const latRand = tabVilles[indice].latitude
+        const longRand = tabVilles[indice].longitude
+        console.log('tabVilles : '+tabVilles.length)*/
 
         const tmpRegion = {
             latitude: latitude,
@@ -154,6 +193,11 @@ const Running = (props) => {
             setDistCourse(parseInt(distanceCourse) + parseInt(distance))
             setRegion(newRegion)
         }
+    }
+
+    const GetRandomInRange = (from, to, fixed) => {
+        return (Math.random() * (to - from) + from).toFixed(fixed) * 1
+        // .toFixed() returns string, so ' * 1' is a trick to convert to number
     }
 
     return (
