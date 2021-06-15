@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 const Administrateur = require('../models/Administrateurs');
 const Utilisateur = require('../models/Utilisateurs');
-
+const Course = require('../models/Courses');
 
 /*Page Accueil */ 
 router.get('/', (req, res) => {
@@ -19,6 +19,23 @@ router.get('/delete/:_idAdmin/:_id', (req, res) => {
   Utilisateur.findOneAndDelete({ _id: _id })
     .then((administrateurs) => res.redirect('/administrateur/' + _idAdmin))
     .catch((err) => console.log(err));
+});
+
+/* Pour afficher les infos d'une course d'un Utilisateur */
+router.get('/course/:idCourse/:idAdmin/:idUser', (req, res) => {
+  const {idCourse} = req.params;
+  const {idUser} = req.params;
+  const {idAdmin} = req.params;
+  Course.findOne({_id: idCourse}).then((courses) => {
+    res.render('courseUser.html', {
+      idUser: idUser,
+      id: idCourse,
+      idAdmin: idAdmin,
+      duree: courses.duree,
+      date: courses.date,
+      kilometres: courses.kilometres,
+    });
+  });
 });
 
 /* Pour modifier un Utilisateur */
