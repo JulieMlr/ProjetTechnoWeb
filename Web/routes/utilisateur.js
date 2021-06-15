@@ -20,6 +20,7 @@ router.get("/connexion", (req, res) => {
 });
 
 router.post("/inscriptionMobile", async (req, res) => {
+  console.log('ici')
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(req.query.motDePasse, salt);
   const nom = req.query.nom;
@@ -138,8 +139,9 @@ router.post("/inscription", async (req, res) => {
 
 router.post("/:_id", (req, res) => {
   const { _id } = req.params;
-  const addCourseUtilisateur = req.body;
-  Utilisateur.findOneAndUpdate({ _id }, { $push: addCourseUtilisateur })
+  const addCourseUtilisateur = req.query.course;
+  console.log(addCourseUtilisateur);
+  Utilisateur.findOneAndUpdate({ _id }, { $push: {tableauCourse: addCourseUtilisateur} })
     .then((utilisateurs) => res.send("utilisateur Updated"))
     .catch((err) => console.log(err));
 });

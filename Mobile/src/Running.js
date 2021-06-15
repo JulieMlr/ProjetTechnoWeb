@@ -117,11 +117,22 @@ const Running = (props) => {
         }
         const { data } = await axios.post(`${API_ROOT_URL}/course?kilometres=${distance}&duree=${duree}&date=${date}&vitesseMoyenne=${vitesseMoyenne}&idRunner=${id}`, body)
             .then((res) => {
-                console.log(res.data)
+                console.log(res.data);
+                addRun(res.data.idRunner, res.data._id)
             })
             .catch(() => {
                 //console.log('ça veut pas')
             })
+    }
+
+    const addRun = async (idRunner, id) => {
+        const { data } = await axios.post(`${API_ROOT_URL}/utilisateur/${idRunner}?course=${id}`)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch(() => {
+            console.log("ca veut pas");
+        })
     }
 
     useEffect(() => {
@@ -230,7 +241,7 @@ const Running = (props) => {
                 }} />
             <Text style={{ fontSize: 25, color: '#e00974', marginTop: '-5%', marginBottom: '2.5%' }}>{day} / {month} / {year}</Text>
             {region.latitude != null && <MapView
-                style={{ height: '55%', width: '90%' }}
+                style={{ height: '35%', width: '90%' }}
                 region={region}
                 onRegionChangeComplete={region => setRegion(region)}
             >
