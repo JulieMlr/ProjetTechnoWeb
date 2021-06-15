@@ -9,8 +9,9 @@ const Verif = async (email, motDePasse, navigation) => {
   //console.log('on est dedans')
         const res = axios.get(`${API_ROOT_URL}/utilisateur/connexionMobile?email=${email}&motDePasse=${motDePasse}`)
           .then((response) => {
-            //console.log('data : '+JSON.stringify(response.data))
-            navigation.navigate('Application', {email})
+            //console.log(response.data)
+            const _id = response.data._id
+            navigation.navigate('Application', { email, _id })
           })
         //console.log(res)
         //return (await res.catch()).data;

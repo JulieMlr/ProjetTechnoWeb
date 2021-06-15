@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons'
 import MapView, { Marker } from "react-native-maps"
 import Geolocation from 'react-native-geolocation-service'
 import * as Location from 'expo-location'
+import axios from 'axios'
+import { API_ROOT_URL } from '../config'
 
 const Running = (props) => {
     const [locationServiceEnabled, setLocationServiceEnabled] = useState(false)
@@ -101,6 +103,25 @@ const Running = (props) => {
             setRestart(true)
             clearInterval(timer)
         }
+        createRun(distanceCourse, counter, day, month, year, props.route.params._id)
+    }
+
+    const createRun = async (distance, duree, jour, mois, annee, id) => {
+        const date = `${annee}-${mois}-${jour}`
+        const vitesseMoyenne = (distance / 1000) / (duree / 3600)
+        const body = {
+            kilometres: distance / 1000,
+            duree: duree,
+            date: date,
+            vitesseMoyenne: vitesseMoyenne
+        }
+        const { data } = await axios.post(`${API_ROOT_URL}/course?kilometres=${distance}&duree=${duree}&date=${date}&vitesseMoyenne=${vitesseMoyenne}&idRunner=${id}`, body)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch(() => {
+                //console.log('ça veut pas')
+            })
     }
 
     useEffect(() => {

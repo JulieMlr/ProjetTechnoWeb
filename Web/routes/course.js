@@ -5,9 +5,10 @@ const Course=require('../models/Courses')
 
 
 router.post("/",(req,res)=>{
-    const {kilometres, duree, date, vitesseMoyenne}=req.body
+    //console.log('kilometres : '+req.query.kilometres)
+    const { kilometres, duree, date, vitesseMoyenne, idRunner } = req.query
     const newCourse=new Course({
-        kilometres, duree, date, vitesseMoyenne
+        kilometres, duree, date, vitesseMoyenne, idRunner
     })
     newCourse.save()
     .then(courses=>res.send(courses))

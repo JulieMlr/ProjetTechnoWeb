@@ -25,7 +25,7 @@ const TabNavigation = (props) => {
             initialRouteName = "Running"
         >
 
-            <Tabs.Screen name="Running" component={Running} options={{
+            <Tabs.Screen name="Running" component={Running} initialParams={{ _id: route.params._id }} options={{
                 tabBarIcon: () => <Ionicons name="timer-outline" size={25} color='white' />,
             }} />
 
