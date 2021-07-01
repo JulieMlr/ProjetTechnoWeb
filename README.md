@@ -4,11 +4,11 @@
 
 ### Technologies
 - React Native
-- CSS / Bootstrap
+- CSS 
 
 ### Fonctionnalités
 - Connexion / Inscription
-- Course : nb de kilomètres + durée + (nb de calories perdues) + vitesse moyenne + date 
+- Course : nb de mètres + durée + (nb de calories perdues) + date 
 - Utilisateur : nom + prénom + email + password + date de naissance + taille + poids + sexe + photo
 
 
@@ -28,7 +28,6 @@
 ### Technologies
 - NoSQL / MongoDB
 - NodeJS
-- Google Firebase
 
 ## Lancement du projet
 ### Web
